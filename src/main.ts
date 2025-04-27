@@ -1,14 +1,7 @@
 import './style.css';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-
-// 定数
-const NEBULA_ROTATION_SPEED = 0.002; // 星雲の回転速度
-const CAMERA_FOV = 75; // カメラの視野角
-const CAMERA_NEAR = 0.1; // カメラの近クリップ面
-const CAMERA_FAR = 1000; // カメラの遠クリップ面
-const CAMERA_INITIAL_Z = 55; // カメラの初期Z座標
-const SCENE_BACKGROUND_COLOR = 0x000011; // シーンの背景色（濃い青）
+import { Config } from './config';
 
 // 球状分布のためのヘルパー関数
 const getRandomSphericalPosition = (radius: number): THREE.Vector3 => {
@@ -232,7 +225,7 @@ class NebulaManager {
 
   // 星雲のアニメーションメソッド
   public animate() {
-    this.nebulaRotation += NEBULA_ROTATION_SPEED; // 回転角度を更新
+    this.nebulaRotation += Config.NEBULA_ROTATION_SPEED; // 回転角度を更新
     this.nebulaGroup.rotation.y = this.nebulaRotation; // Y軸周りに回転
   }
 }
@@ -347,16 +340,16 @@ class NightSky {
 
     // シーンのセットアップ
     this.scene = new THREE.Scene(); // 新しいシーンを作成
-    this.scene.background = new THREE.Color(SCENE_BACKGROUND_COLOR); // 背景色を設定
+    this.scene.background = new THREE.Color(Config.SCENE_BACKGROUND_COLOR); // 背景色を設定
 
     // カメラのセットアップ
     this.camera = new THREE.PerspectiveCamera(
-      CAMERA_FOV, // 視野角
+      Config.CAMERA_FOV, // 視野角
       window.innerWidth / window.innerHeight, // アスペクト比
-      CAMERA_NEAR, // 近クリップ面
-      CAMERA_FAR // 遠クリップ面
+      Config.CAMERA_NEAR, // 近クリップ面
+      Config.CAMERA_FAR // 遠クリップ面
     );
-    this.camera.position.z = CAMERA_INITIAL_Z; // カメラの初期Z位置を設定
+    this.camera.position.z = Config.CAMERA_INITIAL_Z; // カメラの初期Z位置を設定
 
     // レンダラーのセットアップ
     this.renderer = new THREE.WebGLRenderer({ antialias: true }); // アンチエイリアス有効
