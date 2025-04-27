@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    "module": "ESNext",
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "skipLibCheck": true,
+
+    /* Bundler mode */
+    "moduleResolution": "node", // Changed from "bundler"
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true, // Added for potentially better module interop
+    "allowSyntheticDefaultImports": true, // Added for potentially better module interop
+    "isolatedModules": true,
+    "moduleDetection": "force",
+    "noEmit": true,
+    // "types": ["three"], // Removed explicit types
+
+    /* Linting */
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedSideEffectImports": true
+  },
+  "include": ["src"]
+}
