@@ -1,5 +1,6 @@
 import './style.css';
 import * as THREE from 'three';
+import { BrightStarManager } from './brightStarManager';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { Config } from './config';
 
@@ -63,26 +64,6 @@ class StarField {
       const star = new THREE.Mesh(starGeometry, starMaterial);
       star.position.copy(position); // 計算した位置を設定
       this.starGroup.add(star); // 星グループに追加
-    }
-
-    // 明るい星を生成（光源を持つ）
-    // 明るい星のジオメトリ（球体）。セグメント数を増やして滑らかに
-    const brightStarGeometry = new THREE.SphereGeometry(this.BRIGHT_STAR_GEOMETRY_SIZE, 32, 32);
-    for (let i = 0; i < this.BRIGHT_STAR_COUNT; i++) {
-      // ランダムな球状の位置を取得（少し内側）
-      const position = getRandomSphericalPosition(this.STAR_RADIUS);
-
-      // 明るい星のマテリアル（半透明で明るい色）
-      const brightStarMaterial = new THREE.MeshBasicMaterial({
-        color: new THREE.Color().setHSL(Math.random() * 0.1 + 0.6, 0.9, 0.9), // 明るい青紫系の色
-        transparent: true, // 透明度を有効化
-        opacity: 2, // 不透明度（1以上で発光効果）
-      });
-
-      // 明るい星のメッシュを作成
-      const brightStar = new THREE.Mesh(brightStarGeometry, brightStarMaterial);
-      brightStar.position.copy(position); // 計算した位置を設定
-      this.scene.add(brightStar); // シーンに直接追加（グループ化しない）
     }
 
     this.scene.add(this.starGroup); // 通常の星のグループをシーンに追加
@@ -331,6 +312,7 @@ class NightSky {
   private starField: StarField; // 星空マネージャー
   private nebulaManager: NebulaManager; // 星雲マネージャー
   private shootingStarManager: ShootingStarManager; // 流れ星マネージャー
+  private brightStarManager: BrightStarManager; // 明るい星マネージャー
 
   // コンストラクタ
   constructor() {
@@ -372,6 +354,7 @@ class NightSky {
     this.starField = new StarField(this.scene); // 星空を作成
     this.nebulaManager = new NebulaManager(this.scene); // 星雲を作成
     this.shootingStarManager = new ShootingStarManager(this.scene); // 流れ星マネージャーを作成
+    this.brightStarManager = new BrightStarManager(this.scene); // 明るい星を作成
 
     // イベントリスナーの設定
     window.addEventListener('resize', this.handleResize); // ウィンドウリサイズ時の処理
